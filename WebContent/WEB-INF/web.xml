@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" id="WebApp_ID" version="2.5">
+  <servlet>
+    <servlet-name>UploadServlet</servlet-name>
+    <servlet-class>com.cn.shopping.util.UploadServlet</servlet-class>
+    <init-param>
+      <param-name>uploadpath</param-name>
+      <param-value>C:\\Users\\LiuXin\\eclipse-workspace\\Shopping01\\WebContent\\admin\\images\\uploadproduct\\</param-value>
+    </init-param>
+  </servlet>
+  <context-param>
+    <param-name>uploadpath01</param-name>
+    <param-value>C:\\Users\\LiuXin\\eclipse-workspace\\Shopping01\\WebContent\\admin\\images\\uploadproduct</param-value>
+  </context-param>
+  <servlet-mapping>
+    <servlet-name>UploadServlet</servlet-name>
+    <url-pattern>/Shopping01/UploadServlet</url-pattern>
+  </servlet-mapping>
+</web-app>
