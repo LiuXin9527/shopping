@@ -1,0 +1,37 @@
+ @ExceptionHandler(MethodArgumentNotValidException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ResponseBody
+    protected ApiResponse<Object> handleException(MethodArgumentNotValidException e) {
+        log.warn(e.getMessage());
+        List<Errors> errors = e.getBindingResult().getAllErrors().stream()
+                               .map(err -> Errors.builder().code(HttpStatus.BAD_REQUEST.value())
+                                                 .message(err.getDefaultMessage())
+                                                 .build()
+                               ).collect(Collectors.toList());
+
+        return getApiResponse(errors);
+    }
+
+@ExceptionHandler(DataValidationException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ResponseBody
+    protected ApiResponse<Object> handleDataValidationException(DataValidationException e) {
+        log.warn(e.getMessage());
+        List<Errors> errors = List.of(Errors.builder().message(e.getMessage())
+                                            .code(HttpStatus.BAD_REQUEST.value())
+                                            .build());
+
+        return getApiResponse(errors);
+    }
+
+    @ExceptionHandler(DataNotFoundException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    @ResponseBody
+    protected ApiResponse<Object> handleDataNotFoundException(DataNotFoundException e) {
+        log.warn(e.getMessage());
+        List<Errors> errors = List.of(Errors.builder().message(e.getMessage())
+                                            .code(HttpStatus.NOT_FOUND.value())
+                                            .build());
+
+        return getApiResponse(errors);
+    }
