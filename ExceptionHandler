@@ -35,3 +35,43 @@
 
         return getApiResponse(errors);
     }
+
+@ExceptionHandler(PropertyReferenceException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ResponseBody
+    protected ApiResponse<Object> handlePropertyReferenceException(PropertyReferenceException e) {
+        log.warn(e.getMessage());
+
+        List<Errors> errors = List.of(Errors.builder().message("Property is not existed.")
+                                            .code(HttpStatus.BAD_REQUEST.value())
+                                            .build());
+
+        return getApiResponse(errors);
+    }
+
+    @ExceptionHandler(DataIntegrityViolationException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ResponseBody
+    protected ApiResponse<Object> handleDataIntegrityViolationException(DataIntegrityViolationException e) {
+        log.warn(e.getMessage());
+
+        List<Errors> errors = List.of(Errors.builder().message("Request format error.")
+                                            .code(HttpStatus.BAD_REQUEST.value())
+                                            .build());
+
+        return getApiResponse(errors);
+    }
+
+
+ @ExceptionHandler(Exception.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    @ResponseBody
+    protected ApiResponse<Object> handleAllException(Exception e) {
+        log.error(e.getMessage(), e);
+
+        List<Errors> errors = List.of(Errors.builder().message("Internal Error")
+                                            .code(HttpStatus.INTERNAL_SERVER_ERROR.value())
+                                            .build());
+
+        return getApiResponse(errors);
+    }
